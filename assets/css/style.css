@@ -1,0 +1,45 @@
+*{
+    background-color: transparent;
+}
+
+body{
+    background-color: lightgray;
+}
+
+header{
+    background-color: darkred;
+    color: white;
+    display:flex;
+    justify-content: space-between;
+    font-size: 40px;
+    line-height: 150%;
+}
+
+nav{
+    left: 0px;
+    padding-left: 25px;
+}
+nav a{
+    color: white;
+}
+h1{
+    text-align: center;
+}
+
+div.headerTimer{
+    display: flex;
+    right: 0px;
+    font-size: 50px;
+    line-height: 150%;
+    padding-right: 25px;
+}
+
+footer{
+    background-color: darkred;
+    color: white;
+    line-height: 400%;
+    text-align: center;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
