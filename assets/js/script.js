@@ -2,15 +2,21 @@
 var startQuizBtn = document.querySelector('#startQuiz')
 var globalTimer = document.querySelector('#timeRemainingPH')
 var timeRemaining = 10; /* This will need to be moved into the start game function*/
-
+var quizQuestions = [
+    {
+    question: "what is 2 + 2",
+    options: ["1", "2", "3", "4"],
+    answer: "4",
+    }
+]
 /* Event Listen for Start Quiz button Click */
-startQuizBtn.addEventListener("click", startTimer);
+startQuizBtn.addEventListener("click", playGame);
 
 /* This funtction controls the timer */
 function startTimer() {
-    console.log("Start Quiz has been Clicked and startTimer function has been run");
+    console.log("startTimer function has been triggered");
     timer = setInterval(function () {
-        console.log("setInterval has run, "+timeRemaining+" seconds remaining.");
+        console.log("setInterval has triggered, "+timeRemaining+" seconds remaining.");
         timeRemaining--;
         globalTimer.textContent=timeRemaining;
         /* This stops the clock once 0 has been reached  */
@@ -21,7 +27,14 @@ function startTimer() {
         }
     }, 1000);
 }
-/* Psedo Coding
+
+function playGame (){
+    console.log("playGame function has been triggered");
+    timeRemaining = 5;
+    startTimer();
+    console.log(quizQuestions[0]);
+}
+/* Pseudo Coding
 Functions:
     Timer
         add GameOver Function when timer hits 0
@@ -38,7 +51,7 @@ Functions:
             Loop to next question 
     GameOver
         Show user final score
-        Diplay message "Great job"
+        Diplay message "Great job" message
         ask for users name
         user submits score
             writes to local stoage using a JSON stringify
@@ -53,3 +66,5 @@ Extras if have extra time
         will require a second timer for the question
     
 */
+
+
