@@ -1,14 +1,38 @@
 /* Global Parameters*/
 var startQuizBtn = document.querySelector('#startQuiz')
 var globalTimer = document.querySelector('#timeRemainingPH')
+
+var questionVar = document.querySelector('#question')
+var Option1Var = document.querySelector('#Option1')
+var Option2Var = document.querySelector('#Option2')
+var Option3Var = document.querySelector('#Option3')
+var Option4Var = document.querySelector('#Option4')
+var feedbackVar = document.querySelector('#awnserfeedback')
+
 var timeRemaining = 10; /* This will need to be moved into the start game function*/
 var quizQuestions = [
-    {
-    question: "what is 2 + 2",
-    options: ["1", "2", "3", "4"],
-    answer: "4",
-    }
+    [    
+    "what is 2 + 2",
+        [1, 2, 3, 4],
+        4
+    ],
+    [
+        "what is 4 + 4",
+        [1, 2, 8, 4],
+        8
+    ],
+    [
+        "what is 5 + 5",
+        [5, 10, 15, 20],
+        10
+    ],
+    [
+        "what is 10 + 10",
+        [10, 20, 80, 40],
+        20
+    ]
 ]
+
 /* Event Listen for Start Quiz button Click */
 startQuizBtn.addEventListener("click", playGame);
 
@@ -29,20 +53,59 @@ function startTimer() {
 }
 
 function playGame (){
+    var questionPool = quizQuestions;
+    console.log("Below is the questionPool");
+    console.log(questionPool);
+    console.log("------------");
+    var askedQuestions = '';
     console.log("playGame function has been triggered");
-    timeRemaining = 5;
+    timeRemaining = 5; /* Sets the play time for the game */
     startTimer();
-    console.log(quizQuestions[0]);
+    questionHandling();
+
+    function questionHandling (){
+        /* Generating a Random number for question selection */
+        console.log("questionHandling has been triggered")
+        var randomNum = Math.floor(Math.random() * questionPool.length);
+        console.log("Random Number has been generated: "+randomNum);
+
+        /* Updating the question that is being show to the user based on the random number that has been generated */
+        var questionDisplay = questionPool[randomNum][0];
+        console.log("Question to be displayed is: " +questionDisplay);
+        questionVar.textContent=questionDisplay;
+        var Option1Display = questionPool[randomNum][1][0];
+        console.log("Option 1 to be displayed is: "+Option1Display);
+        Option1Var.textContent=Option1Display;
+        var Option2Display = questionPool[randomNum][1][1];
+        console.log("Option 2 to be displayed is: "+Option2Display);
+        Option2Var.textContent=Option2Display;
+        var Option3Display = questionPool[randomNum][1][2];
+        Option3Var.textContent=Option3Display;
+        console.log("Option 3 to be displayed is: "+Option3Display);
+        var Option4Display = questionPool[randomNum][1][3];
+        Option4Var.textContent=Option4Display;
+        console.log("Option 4 to be displayed is: "+Option4Display);
+
+
+
+
+
+        /* Still need to find a place for this */
+        feedbackVar.textContent=feedBackDisplay;
+    }
+
+    
+    
 }
 /* Pseudo Coding
 Functions:
     Timer
         add GameOver Function when timer hits 0
     Play Game
-        Add time to clock
-        Copy question list to a un-asked variable
+        DONE -- Add time to clock
+        DONE -- Copy question list to a un-asked variable
         Random Select a question
-            will need to do a math calculation to ran select
+            DONE -- will need to do a math calculation to ran select
             Move questions from un-asked to asked to prevent being repeated
             Right / Wrong logic
                 if right
