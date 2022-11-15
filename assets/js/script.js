@@ -10,7 +10,7 @@ var Option4Var = document.querySelector('#Option4')
 var feedbackVar = document.querySelector('#awnserfeedback')
 
 var timeRemaining = 10; /* This will need to be moved into the start game function*/
-var quizQuestions = [
+const quizQuestions = [
     [    
     "what is 2 + 2",
         [1, 2, 3, 4],
@@ -53,9 +53,9 @@ function startTimer() {
 }
 
 function playGame (){
+    console.log(quizQuestions);
     var questionPool = quizQuestions;
-    console.log("Below is the questionPool");
-    console.log(questionPool);
+    console.log("Below are the quizQuestions");
     console.log("------------");
     var askedQuestions = '';
     console.log("playGame function has been triggered");
@@ -86,7 +86,11 @@ function playGame (){
         Option4Var.textContent=Option4Display;
         console.log("Option 4 to be displayed is: "+Option4Display);
 
-
+        /* Splicing the question pool array to prevent question repeats */
+        askedQuestions += questionPool.splice(randomNum, 1);
+        console.log("Attempting Splice");
+        console.log(questionPool);
+        console.log(askedQuestions);
 
 
 
@@ -106,13 +110,18 @@ Functions:
         DONE -- Copy question list to a un-asked variable
         Random Select a question
             DONE -- will need to do a math calculation to ran select
-            Move questions from un-asked to asked to prevent being repeated
-            Right / Wrong logic
-                if right
-                    grant points 10 points
-                Diplay a right or wrong message
+            DONE -- Move questions from un-asked to asked to prevent being repeated
+    awnserCheck
+        if right
+            grant points 10 points
+            Diplay a right message and face away after 5 seconds
             Loop to next question 
+        If wrong
+            remove 10 seconds from clock
+            take away Diplay a right or wrong message
+            Loop to next question        
     GameOver
+        When time runs out
         Show user final score
         Diplay message "Great job" message
         ask for users name
