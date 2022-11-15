@@ -1,12 +1,16 @@
 /* Global Parameters*/
+
+/* FInd a good definiton for these buttons and text update variables*/
 var startQuizBtn = document.querySelector('#startQuiz')
 var globalTimer = document.querySelector('#timeRemainingPH')
+var quizOptionsList = document.querySelector('#optionsList')
+
 
 var questionVar = document.querySelector('#question')
-var Option1Var = document.querySelector('#Option1')
-var Option2Var = document.querySelector('#Option2')
-var Option3Var = document.querySelector('#Option3')
-var Option4Var = document.querySelector('#Option4')
+var option1Var = document.querySelector('#option1')
+var option2Var = document.querySelector('#option2')
+var option3Var = document.querySelector('#option3')
+var option4Var = document.querySelector('#option4')
 var feedbackVar = document.querySelector('#awnserfeedback')
 
 var timeRemaining = 10; /* This will need to be moved into the start game function*/
@@ -73,18 +77,18 @@ function playGame (){
         var questionDisplay = questionPool[randomNum][0];
         console.log("Question to be displayed is: " +questionDisplay);
         questionVar.textContent=questionDisplay;
-        var Option1Display = questionPool[randomNum][1][0];
-        console.log("Option 1 to be displayed is: "+Option1Display);
-        Option1Var.textContent=Option1Display;
-        var Option2Display = questionPool[randomNum][1][1];
-        console.log("Option 2 to be displayed is: "+Option2Display);
-        Option2Var.textContent=Option2Display;
-        var Option3Display = questionPool[randomNum][1][2];
-        Option3Var.textContent=Option3Display;
-        console.log("Option 3 to be displayed is: "+Option3Display);
-        var Option4Display = questionPool[randomNum][1][3];
-        Option4Var.textContent=Option4Display;
-        console.log("Option 4 to be displayed is: "+Option4Display);
+        var option1Display = questionPool[randomNum][1][0];
+        console.log("Option 1 to be displayed is: "+option1Display);
+        option1Var.textContent=option1Display;
+        var option2Display = questionPool[randomNum][1][1];
+        console.log("Option 2 to be displayed is: "+option2Display);
+        option2Var.textContent=option2Display;
+        var option3Display = questionPool[randomNum][1][2];
+        option3Var.textContent=option3Display;
+        console.log("Option 3 to be displayed is: "+option3Display);
+        var option4Display = questionPool[randomNum][1][3];
+        option4Var.textContent=option4Display;
+        console.log("Option 4 to be displayed is: "+option4Display);
 
         /* Splicing the question pool array to prevent question repeats */
         askedQuestions += questionPool.splice(randomNum, 1);
@@ -94,13 +98,21 @@ function playGame (){
 
 
 
-        /* Still need to find a place for this */
+        /* Still need to find a place for this 
         feedbackVar.textContent=feedBackDisplay;
+    */
     }
-
-    
-    
 }
+
+quizOptionsList.addEventListener("click", awnserCheck);
+
+function awnserCheck(e){
+    console.log("awnserCheck has been tiggered");
+    var clickedElement = e.target.id;
+    console.log(clickedElement);
+};
+
+
 /* Pseudo Coding
 Functions:
     Timer
