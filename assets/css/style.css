@@ -47,6 +47,12 @@ div.headerTimer{
     background-color: darkgray;
 }
 
+#optionsBox{
+    text-align: center;
+    align-items: center;
+    font-size: 25px;
+}
+
 #question{
     font-weight: bolder;
     font-size: 30px;
@@ -58,7 +64,6 @@ div.headerTimer{
     margin-left: 3%;
     margin-right: 3%;
     margin-top: 10px;
-    
     line-height: 150%;
     }
 
@@ -91,6 +96,14 @@ li:hover{
     background-color: darkred;
     color: white;
    }
+
+#submitScore{
+    background-color: white;
+    padding: 7px;
+    background-color: darkred;
+    color: white;
+    display: none;
+}
 
 footer{
     background-color: darkred;
