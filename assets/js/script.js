@@ -4,7 +4,7 @@
 var startQuizBtn = document.querySelector('#startQuiz')
 var globalTimer = document.querySelector('#timeRemainingPH')
 var quizOptionsList = document.querySelector('#optionsList')
-
+var scoreDisplay = document.querySelector('#scoreValue')
 
 var questionVar = document.querySelector('#question')
 var option1Var = document.querySelector('#option1')
@@ -14,6 +14,7 @@ var option4Var = document.querySelector('#option4')
 var feedbackVar = document.querySelector('#awnserfeedback')
 
 var timeRemaining;
+var score = 0;
 const quizQuestions = [
     [    
     "what is 2 + 2",
@@ -109,24 +110,27 @@ function playGame (){
             var feedBackDisplay;
             
             console.log("Clicked Option was: "+clickedElement);
-           console.log("Correct anwser was: "+quizAwnser);
+            console.log("Correct anwser was: "+quizAwnser);
 
-           if (clickedElement===quizAwnser){
-            console.log("****correct Awnser was clicked****")
-            feedBackDisplay = "Correct, great job!";
-            feedbackVar.textContent=feedBackDisplay;
+            if (clickedElement===quizAwnser){
+                console.log("****correct Awnser was clicked****")
+                timeRemaining += 10;
+                score += 25;
+                console.log("Score is now: "+score)
+                scoreDisplay.textContent=score;
+                feedBackDisplay = "Correct!!! You have gained more 10 seconds!!";
+                feedbackVar.textContent =feedBackDisplay;
+                questionHandling();
            } else {
-            console.log("incorrect Awnser was clicked")
-            feedBackDisplay = "Incorrect, better luck next time!";
-            feedbackVar.textContent=feedBackDisplay;
+                console.log("incorrect Awnser was clicked")
+                timeRemaining -= 10;
+                feedBackDisplay = "Thats incorrect, you have lost 10 seconds. Better luck next time!! ";
+                feedbackVar.textContent=feedBackDisplay;
+                questionHandling()
            }
 
         };
 
-
-        /* Still need to find a place for this 
-        feedbackVar.textContent=feedBackDisplay;
-    */
     }
 
 
@@ -141,6 +145,8 @@ function playGame (){
 Functions:
     Timer
         add GameOver Function when timer hits 0
+        Stop at 0
+        Prevent multiple triggers
     Play Game
         DONE -- Add time to clock
         DONE -- Copy question list to a un-asked variable
@@ -149,15 +155,14 @@ Functions:
             DONE -- Move questions from un-asked to asked to prevent being repeated
     awnserCheck
         if right
-            grant points 10 points
-            Diplay a right message and face away after 5 seconds
-            Loop to next question 
-        If wrong
-            remove 10 seconds from clock
-            take away Diplay a right or wrong message
-            Loop to next question        
+            grant points points
+            DONE -- Diplay a right messages
+            DONE -- Loop to next question 
+        DONE -- If wrong
+            DONE -- remove 10 seconds from clock
+            DONE -- Loop to next question        
     GameOver
-        When time runs out
+        When time runs out or out of questions
         Show user final score
         Diplay message "Great job" message
         ask for users name
@@ -172,7 +177,11 @@ Functions:
 Extras if have extra time
     award extra points if questions awsered fast
         will require a second timer for the question
-    
+    Add 3 or 5 second fade to feedback
+    Look to see if sounds can be added
+        Correct, Incorrect, Game done
+    Find a background image
+        use opacity on it to reduce attention?
 */
 
 
