@@ -5,6 +5,7 @@ var startQuizBtn = document.querySelector('#startQuiz')
 var globalTimer = document.querySelector('#timeRemainingPH')
 var quizOptionsList = document.querySelector('#optionsList')
 var scoreDisplay = document.querySelector('#scoreValue')
+var optionsDisplay = document.querySelector('#optionsList')
 
 var questionVar = document.querySelector('#question')
 var option1Var = document.querySelector('#option1')
@@ -49,32 +50,51 @@ function startTimer() {
         timeRemaining--;
         globalTimer.textContent=timeRemaining;
         /* This stops the clock once 0 has been reached  */
-        if (timeRemaining === 0){
+        if (timeRemaining <= 0){
             clearInterval(timer);
             console.log("Time has hit 0, and timer has been cleared")
+            gameOver();
             /* Needs to trigger the loss function */
         }
     }, 1000);
 }
 
+function gameOver(){
+    console.log("gameOver function has been triggered");
+    clearInterval(timer);
+    optionsDisplay.style.visibility='hidden';
+
+    feedBackDisplay = "";
+    feedbackVar.textContent=feedBackDisplay;
+    questionVar.textContent= "Game Over"
+}
+
 function playGame (){
+    console.log("playGame function has been triggered");
+    startQuizBtn.style.visibility='hidden';
     console.log(quizQuestions);
     var questionPool = quizQuestions;
     console.log("Below are the quizQuestions");
     console.log("------------");
     var askedQuestions = '';
-    console.log("playGame function has been triggered");
-    timeRemaining = 5; /* Sets the play time for the game */
+    timeRemaining = 2; /* Sets the play time for the game */
     startTimer();
     questionHandling();
 
     function questionHandling (){
-        /* Generating a Random number for question selection */
+        if (questionPool <= 1){
+            gameOver();
+            return;
+        }
+
+
+                /* Generating a Random number for question selection */
         console.log("questionHandling function has been triggered")
         var randomNum = Math.floor(Math.random() * questionPool.length);
         console.log("Random Number has been generated: "+randomNum);
 
         /* Updating the question that is being show to the user based on the random number that has been generated */
+        console.log(questionPool.length);
         var questionDisplay = questionPool[randomNum][0];
         console.log("Question to be displayed is: " +questionDisplay);
         questionVar.textContent=questionDisplay;
@@ -130,22 +150,18 @@ function playGame (){
            }
 
         };
+        
 
     }
 
 
 }
 
-
-
-
-
-
 /* Pseudo Coding
 Functions:
     Timer
         add GameOver Function when timer hits 0
-        Stop at 0
+        Stop at 0 (but can still go negative)
         Prevent multiple triggers
     Play Game
         DONE -- Add time to clock
@@ -154,15 +170,15 @@ Functions:
             DONE -- will need to do a math calculation to ran select
             DONE -- Move questions from un-asked to asked to prevent being repeated
     awnserCheck
-        if right
-            grant points points
+        DONE -- if right
+            DONE -- grant points points
             DONE -- Diplay a right messages
             DONE -- Loop to next question 
         DONE -- If wrong
             DONE -- remove 10 seconds from clock
             DONE -- Loop to next question        
     GameOver
-        When time runs out or out of questions
+        DONE -- Triggers when time runs out or out of questions
         Show user final score
         Diplay message "Great job" message
         ask for users name
@@ -182,6 +198,7 @@ Extras if have extra time
         Correct, Incorrect, Game done
     Find a background image
         use opacity on it to reduce attention?
+    Why is a qusetion being lost during playthough
 */
 
 
