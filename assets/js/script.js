@@ -13,27 +13,27 @@ var option3Var = document.querySelector('#option3')
 var option4Var = document.querySelector('#option4')
 var feedbackVar = document.querySelector('#awnserfeedback')
 
-var timeRemaining = 10; /* This will need to be moved into the start game function*/
+var timeRemaining;
 const quizQuestions = [
     [    
     "what is 2 + 2",
         [1, 2, 3, 4],
-        4
+        'option4'
     ],
     [
         "what is 4 + 4",
         [1, 2, 8, 4],
-        8
+        'option3'
     ],
     [
         "what is 5 + 5",
         [5, 10, 15, 20],
-        10
+        'option2'
     ],
     [
         "what is 10 + 10",
-        [10, 20, 80, 40],
-        20
+        [20, 10, 80, 40],
+        'option1'
     ]
 ]
 
@@ -69,7 +69,7 @@ function playGame (){
 
     function questionHandling (){
         /* Generating a Random number for question selection */
-        console.log("questionHandling has been triggered")
+        console.log("questionHandling function has been triggered")
         var randomNum = Math.floor(Math.random() * questionPool.length);
         console.log("Random Number has been generated: "+randomNum);
 
@@ -77,6 +77,7 @@ function playGame (){
         var questionDisplay = questionPool[randomNum][0];
         console.log("Question to be displayed is: " +questionDisplay);
         questionVar.textContent=questionDisplay;
+        
         var option1Display = questionPool[randomNum][1][0];
         console.log("Option 1 to be displayed is: "+option1Display);
         option1Var.textContent=option1Display;
@@ -90,27 +91,50 @@ function playGame (){
         option4Var.textContent=option4Display;
         console.log("Option 4 to be displayed is: "+option4Display);
 
+        var quizAwnser = questionPool[randomNum][2];
+        console.log("The awnser is: "+quizAwnser);
+
         /* Splicing the question pool array to prevent question repeats */
         askedQuestions += questionPool.splice(randomNum, 1);
         console.log("Attempting Splice");
         console.log(questionPool);
         console.log(askedQuestions);
+        
+        /* Event listen for clicks during the playgame function */
+        quizOptionsList.addEventListener("click", awnserCheck);
+        
+        function awnserCheck(e){
+            console.log("awnserCheck function has been tiggered");
+            var clickedElement = e.target.id;
+            var feedBackDisplay;
+            
+            console.log("Clicked Option was: "+clickedElement);
+           console.log("Correct anwser was: "+quizAwnser);
 
+           if (clickedElement===quizAwnser){
+            console.log("****correct Awnser was clicked****")
+            feedBackDisplay = "Correct, great job!";
+            feedbackVar.textContent=feedBackDisplay;
+           } else {
+            console.log("incorrect Awnser was clicked")
+            feedBackDisplay = "Incorrect, better luck next time!";
+            feedbackVar.textContent=feedBackDisplay;
+           }
+
+        };
 
 
         /* Still need to find a place for this 
         feedbackVar.textContent=feedBackDisplay;
     */
     }
+
+
 }
 
-quizOptionsList.addEventListener("click", awnserCheck);
 
-function awnserCheck(e){
-    console.log("awnserCheck has been tiggered");
-    var clickedElement = e.target.id;
-    console.log(clickedElement);
-};
+
+
 
 
 /* Pseudo Coding
@@ -120,7 +144,7 @@ Functions:
     Play Game
         DONE -- Add time to clock
         DONE -- Copy question list to a un-asked variable
-        Random Select a question
+        DONE -- Random Select a question
             DONE -- will need to do a math calculation to ran select
             DONE -- Move questions from un-asked to asked to prevent being repeated
     awnserCheck
