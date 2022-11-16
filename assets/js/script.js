@@ -6,6 +6,8 @@ var globalTimer = document.querySelector('#timeRemainingPH')
 var quizOptionsList = document.querySelector('#optionsList')
 var scoreDisplay = document.querySelector('#scoreValue')
 var optionsDisplay = document.querySelector('#optionsList')
+var gameOverText = document.querySelector('#gameOverP')
+var submitScoreBtn = document.querySelector('#submitScore')
 
 var questionVar = document.querySelector('#question')
 var option1Var = document.querySelector('#option1')
@@ -13,9 +15,11 @@ var option2Var = document.querySelector('#option2')
 var option3Var = document.querySelector('#option3')
 var option4Var = document.querySelector('#option4')
 var feedbackVar = document.querySelector('#awnserfeedback')
+var feedBackDisplay;
 
 var timeRemaining;
 var score = 0;
+var timeOut = false
 const quizQuestions = [
     [    
     "what is 2 + 2",
@@ -39,8 +43,11 @@ const quizQuestions = [
     ]
 ]
 
-/* Event Listen for Start Quiz button Click */
+/* Event Listener for Start Quiz button Click */
 startQuizBtn.addEventListener("click", playGame);
+
+/* Event Listener to submit score button Click */
+submitScoreBtn.addEventListener("click", playGame);
 
 /* This funtction controls the timer */
 function startTimer() {
@@ -63,26 +70,46 @@ function gameOver(){
     console.log("gameOver function has been triggered");
     clearInterval(timer);
     optionsDisplay.style.visibility='hidden';
-
+    startQuizBtn.textContent = "Play Again";
+    startQuizBtn.style.visibility='visible';
+    submitScoreBtn.style.visibility='visible';
+    submitScore.style.display='inline';
     feedBackDisplay = "";
     feedbackVar.textContent=feedBackDisplay;
-    questionVar.textContent= "Game Over"
+    questionVar.textContent= "Game Over";
+    if (timeRemaining <= 0){
+        console.log(timeRemaining);
+        gameOverText.textContent = "Oh no, you have ran out of time!";
+    } else {
+        gameOverText.textContent = "Congratulations you have made it through all of the questions!";
+    }
+        
+
 }
 
 function playGame (){
+    event.preventDefault();
+    event.stopPropagation();
     console.log("playGame function has been triggered");
     startQuizBtn.style.visibility='hidden';
-    console.log(quizQuestions);
+    submitScoreBtn.style.visibility='hidden';
+    console.log("Number of questions in the quizQuestions pool is: " + quizQuestions.length);
     var questionPool = quizQuestions;
     console.log("Below are the quizQuestions");
+    console.log(questionPool);
     console.log("------------");
     var askedQuestions = '';
-    timeRemaining = 2; /* Sets the play time for the game */
+    timeRemaining = 10; /* Sets the play time for the game */
+    globalTimer.textContent=timeRemaining;
     startTimer();
     questionHandling();
 
     function questionHandling (){
-        if (questionPool <= 1){
+        event.preventDefault();
+        event.stopPropagation();
+        console.log("Number of questions left in the questionPool pool is: " + questionPool.length);
+        if (questionPool < 1 ){
+            console.log("Have run out of questions.");
             gameOver();
             return;
         }
@@ -94,7 +121,6 @@ function playGame (){
         console.log("Random Number has been generated: "+randomNum);
 
         /* Updating the question that is being show to the user based on the random number that has been generated */
-        console.log(questionPool.length);
         var questionDisplay = questionPool[randomNum][0];
         console.log("Question to be displayed is: " +questionDisplay);
         questionVar.textContent=questionDisplay;
@@ -118,23 +144,24 @@ function playGame (){
         /* Splicing the question pool array to prevent question repeats */
         askedQuestions += questionPool.splice(randomNum, 1);
         console.log("Attempting Splice");
-        console.log(questionPool);
+        console.log(questionPool);  
         console.log(askedQuestions);
         
         /* Event listen for clicks during the playgame function */
         quizOptionsList.addEventListener("click", awnserCheck);
         
-        function awnserCheck(e){
+        function awnserCheck(event){
+            event.preventDefault();
+            event.stopPropagation();
             console.log("awnserCheck function has been tiggered");
-            var clickedElement = e.target.id;
-            var feedBackDisplay;
-            
+            var clickedElement = event.target.id;
             console.log("Clicked Option was: "+clickedElement);
             console.log("Correct anwser was: "+quizAwnser);
 
             if (clickedElement===quizAwnser){
-                console.log("****correct Awnser was clicked****")
+                console.log("+++++correct Awnser was clicked+++++")
                 timeRemaining += 10;
+                globalTimer.textContent=timeRemaining;
                 score += 25;
                 console.log("Score is now: "+score)
                 scoreDisplay.textContent=score;
@@ -142,8 +169,9 @@ function playGame (){
                 feedbackVar.textContent =feedBackDisplay;
                 questionHandling();
            } else {
-                console.log("incorrect Awnser was clicked")
+                console.log("-----incorrect Awnser was clicked-----")
                 timeRemaining -= 10;
+                globalTimer.textContent=timeRemaining;
                 feedBackDisplay = "Thats incorrect, you have lost 10 seconds. Better luck next time!! ";
                 feedbackVar.textContent=feedBackDisplay;
                 questionHandling()
