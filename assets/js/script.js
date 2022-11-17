@@ -17,6 +17,8 @@ var option4Var = document.querySelector('#option4')
 var feedbackVar = document.querySelector('#awnserfeedback')
 var feedBackDisplay;
 var quizAnswer;
+var initials = document.querySelector("#initals");
+var submitRecord = document.querySelector("#submitRecord")
 
 var timeRemaining;
 var score = 0;
@@ -48,13 +50,22 @@ const quizQuestions = [
 startQuizBtn.addEventListener("click", playGame);
 
 /* Event Listener to submit score button Click */
-submitScoreBtn.addEventListener("click", recordkeeping);
+submitScoreBtn.addEventListener("click", recordKeeping);
 
-function recordkeeping() {
-    console.log("recordKeeping function has been triggered")
-    localStorage.setItem("unsavedScore", score);
-    window.location.replace("./highscore.html");
+function recordKeeping(event) {
+    event.preventDefault();
+    console.log("recordKeeping function has been triggered.");
+    console.log("Name: "+initials.value);
+    /* ADD IF STATMENT VALIDATING DETAILS HAVE BEEN ADDED */
+     console.log("Score: "+score)
+
+w
+
 }
+
+submitRecord.addEventListener("click",recordKeeping)
+
+
 
 /* This funtction controls the timer */
 function startTimer() {
@@ -98,8 +109,6 @@ function gameOver() {
 }
 
 function playGame() {
-    event.preventDefault();
-    event.stopPropagation();
     console.log("playGame function has been triggered");
     startQuizBtn.style.visibility = 'hidden';
     submitScoreBtn.style.visibility = 'hidden';
@@ -116,8 +125,6 @@ function playGame() {
 }
 
 function questionHandling() {
-    event.preventDefault();
-    event.stopPropagation();
     console.log("Number of questions left in the quizQuestions pool is: " + quizQuestions.length);
     if (quizQuestions < 1) {
         console.log("Have run out of questions.");
@@ -235,6 +242,9 @@ Extras if have extra time
     Find a background image
         use opacity on it to reduce attention?
     Why is a qusetion being lost during playthough
+    Clean up assets
+        Remove highscore html and js files
+    Change questions array to objects
 */
 
 
