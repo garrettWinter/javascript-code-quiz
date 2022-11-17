@@ -47,7 +47,13 @@ const quizQuestions = [
 startQuizBtn.addEventListener("click", playGame);
 
 /* Event Listener to submit score button Click */
-submitScoreBtn.addEventListener("click", playGame);
+submitScoreBtn.addEventListener("click", recordkeeping);
+
+function recordkeeping (){
+console.log("recordKeeping function has been triggered")
+localStorage.setItem("unsavedScore", score);
+window. location. replace("./highscore.html");
+}
 
 /* This funtction controls the timer */
 function startTimer() {
@@ -77,8 +83,11 @@ function gameOver(){
     feedBackDisplay = "";
     feedbackVar.textContent=feedBackDisplay;
     questionVar.textContent= "Game Over";
+    score += (timeRemaining * 5);
+    scoreDisplay.textContent = score;
+    console.log("Final Score is: "+score);
     if (timeRemaining <= 0){
-        console.log(timeRemaining);
+        console.log("Ending Time remaining: " + timeRemaining);
         gameOverText.textContent = "Oh no, you have ran out of time!";
     } else {
         gameOverText.textContent = "Congratulations you have made it through all of the questions!";
@@ -138,8 +147,8 @@ function playGame (){
         option4Var.textContent=option4Display;
         console.log("Option 4 to be displayed is: "+option4Display);
 
-        var quizAwnser = questionPool[randomNum][2];
-        console.log("The awnser is: "+quizAwnser);
+        var quizAnswer = questionPool[randomNum][2];
+        console.log("The awnser is: "+quizAnswer);
 
         /* Splicing the question pool array to prevent question repeats */
         askedQuestions += questionPool.splice(randomNum, 1);
@@ -148,17 +157,17 @@ function playGame (){
         console.log(askedQuestions);
         
         /* Event listen for clicks during the playgame function */
-        quizOptionsList.addEventListener("click", awnserCheck);
+        quizOptionsList.addEventListener("click", answerCheck);
         
-        function awnserCheck(event){
+        function answerCheck(event){
             event.preventDefault();
             event.stopPropagation();
             console.log("awnserCheck function has been tiggered");
             var clickedElement = event.target.id;
             console.log("Clicked Option was: "+clickedElement);
-            console.log("Correct anwser was: "+quizAwnser);
+            console.log("Correct anwser was: "+quizAnswer);
 
-            if (clickedElement===quizAwnser){
+            if (clickedElement===quizAnswer){
                 console.log("+++++correct Awnser was clicked+++++")
                 timeRemaining += 10;
                 globalTimer.textContent=timeRemaining;
