@@ -196,8 +196,8 @@ quizOptionsList.addEventListener("click", answerCheck);
 /* Pseudo Coding
 Functions:
     Timer
-        add GameOver Function when timer hits 0
-        Stop at 0 (but can still go negative)
+        DONE -- add GameOver Function when timer hits 0
+        Done -- Stop at 0 (but can still go negative)
         Prevent multiple triggers
     Play Game
         DONE -- Add time to clock
@@ -216,15 +216,15 @@ Functions:
     GameOver
         DONE -- Triggers when time runs out or out of questions
         Show user final score
-        Diplay message "Great job" message
-        ask for users name
-        user submits score
-            writes to local stoage using a JSON stringify
-            Redirects user to high score page
-        
- 
-    Record Keeping (high Score Page)
-        reads local store and displays using a JSON Parse
+            Needs to be styled
+        Done -- Diplay message "Great job" message
+        DONE -- Store score to local storage
+        DONE -- Redirects user to high score page
+    PlayAgain function
+        trigger page reload
+            bonus
+                could set local storage variable to auto trigger autoPlay
+
 
 Extras if have extra time
     award extra points if questions awsered fast
