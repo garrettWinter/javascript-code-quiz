@@ -1,28 +1,29 @@
 /* Global Parameters*/
 
 /* FInd a good definiton for these buttons and text update variables*/
-var startQuizBtn = document.querySelector('#startQuiz')
-var globalTimer = document.querySelector('#timeRemainingPH')
-var quizOptionsList = document.querySelector('#optionsList')
-var scoreDisplay = document.querySelector('#scoreValue')
-var optionsDisplay = document.querySelector('#optionsList')
-var gameOverText = document.querySelector('#gameOverP')
-var submitScoreBtn = document.querySelector('#submitScore')
+var startQuizBtn = document.querySelector('#startQuiz');
+var globalTimer = document.querySelector('#timeRemainingPH');
+var quizOptionsList = document.querySelector('#optionsList');
+var scoreDisplay = document.querySelector('#scoreValue');
+var optionsDisplay = document.querySelector('#optionsList');
+var gameOverText = document.querySelector('#gameOverP');
+var submitScoreBtn = document.querySelector('#submitScore');
+var questionVar = document.querySelector('#question');
+var option1Var = document.querySelector('#option1');
+var option2Var = document.querySelector('#option2');
+var option3Var = document.querySelector('#option3');
+var option4Var = document.querySelector('#option4');
+var feedbackVar = document.querySelector('#awnserfeedback');
+var initials = document.querySelector("#initals");
+var submitRecord = document.querySelector("#submitRecord");
 
-var questionVar = document.querySelector('#question')
-var option1Var = document.querySelector('#option1')
-var option2Var = document.querySelector('#option2')
-var option3Var = document.querySelector('#option3')
-var option4Var = document.querySelector('#option4')
-var feedbackVar = document.querySelector('#awnserfeedback')
 var feedBackDisplay;
 var quizAnswer;
-var initials = document.querySelector("#initals");
-var submitRecord = document.querySelector("#submitRecord")
-
 var timeRemaining;
 var score = 0;
-var timeOut = false
+var timeOut = false;
+var highScores = [];
+var newScore;
 const quizQuestions = [
     [
         "what is 2 + 2",
@@ -44,34 +45,52 @@ const quizQuestions = [
         [20, 10, 80, 40],
         'option1'
     ]
-]
+];
 
-/* Event Listener for Start Quiz button Click */
+/* Event Listeners */
+quizOptionsList.addEventListener("click", answerCheck);
 startQuizBtn.addEventListener("click", playGame);
 
-/* Event Listener to submit score button Click */
+/* Event Listener to submit score button Click NEED TO REVIEW THESE AND CLEAN THIS UP!!!!!*/
 submitScoreBtn.addEventListener("click", recordKeeping);
+submitRecord.addEventListener("click", submitHighScore)
 
-function recordKeeping(event) {
-    event.preventDefault();
+function recordKeeping() {
     console.log("recordKeeping function has been triggered.");
-    console.log("Name: "+initials.value);
-    /* ADD IF STATMENT VALIDATING DETAILS HAVE BEEN ADDED */
-     console.log("Score: "+score)
-
-w
+    // unhide Highscore DIV
+    highScores = JSON.parse(localStorage.getItem("allTimeHighScores",));
+    console.log(highScores);
+   
+    /*
+    Update Display elements for highscores 
+    */
 
 }
 
-submitRecord.addEventListener("click",recordKeeping)
+/* This is the function to submit the score which will perform feild validation along with adding this to highScores array and local storage. */
+function submitHighScore(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log("submitHighScore function has been triggered.");
+    if (initials.value.length === 0) {
+        window.alert("Please enter initals before Submitting.");
+        return;
+    };
+    newScore = {
+        initials: initials.value,
+        score: score
+    };
+    highScores.push(newScore);
+    console.log(highScores);
+    localStorage.setItem("allTimeHighScores",JSON.stringify(highScores));
+    recordKeeping();
 
-
+}
 
 /* This funtction controls the timer */
 function startTimer() {
     console.log("startTimer function has been triggered");
     timer = setInterval(function () {
-        console.log("setInterval has triggered, " + timeRemaining + " seconds remaining.");
         timeRemaining--;
         globalTimer.textContent = timeRemaining;
         /* This stops the clock once 0 has been reached  */
@@ -79,7 +98,6 @@ function startTimer() {
             clearInterval(timer);
             console.log("Time has hit 0, and timer has been cleared")
             gameOver();
-            /* Needs to trigger the loss function */
         }
     }, 1000);
 }
@@ -113,10 +131,6 @@ function playGame() {
     startQuizBtn.style.visibility = 'hidden';
     submitScoreBtn.style.visibility = 'hidden';
     console.log("Number of questions in the quizQuestions pool is: " + quizQuestions.length);
-    // var questionPool = quizQuestions;
-    console.log("Below are the quizQuestions");
-    // console.log(questionPool);
-    console.log("------------");
     var askedQuestions = '';
     timeRemaining = 10; /* Sets the play time for the game */
     globalTimer.textContent = timeRemaining;
@@ -136,36 +150,25 @@ function questionHandling() {
     /* Generating a Random number for question selection */
     console.log("questionHandling function has been triggered")
     var randomNum = Math.floor(Math.random() * quizQuestions.length);
-    console.log("Random Number has been generated: " + randomNum);
 
-    /* Updating the question that is being show to the user based on the random number that has been generated */
+    /* Updating the question that is being shown to the user based on the random number that has been generated */
     var questionDisplay = quizQuestions[randomNum][0];
-    console.log("Question to be displayed is: " + questionDisplay);
     questionVar.textContent = questionDisplay;
 
     var option1Display = quizQuestions[randomNum][1][0];
-    console.log("Option 1 to be displayed is: " + option1Display);
     option1Var.textContent = option1Display;
     var option2Display = quizQuestions[randomNum][1][1];
-    console.log("Option 2 to be displayed is: " + option2Display);
     option2Var.textContent = option2Display;
     var option3Display = quizQuestions[randomNum][1][2];
     option3Var.textContent = option3Display;
-    console.log("Option 3 to be displayed is: " + option3Display);
     var option4Display = quizQuestions[randomNum][1][3];
     option4Var.textContent = option4Display;
-    console.log("Option 4 to be displayed is: " + option4Display);
 
     quizAnswer = quizQuestions[randomNum][2];
     console.log("The awnser is: " + quizAnswer);
 
     /* Splicing the question pool array to prevent question repeats */
     quizQuestions.splice(randomNum, 1);
-    console.log("Attempting Splice");
-    // console.log(quizQuestions);
-    // console.log(askedQuestions);
-
-    /* Event listen for clicks during the playgame function */
 }
 
 function answerCheck(event) {
@@ -197,54 +200,43 @@ function answerCheck(event) {
 
 };
 
-quizOptionsList.addEventListener("click", answerCheck);
-
-
 /* Pseudo Coding
-Functions:
-    Timer
-        DONE -- add GameOver Function when timer hits 0
-        Done -- Stop at 0 (but can still go negative)
-        Prevent multiple triggers
-    Play Game
-        DONE -- Add time to clock
-        DONE -- Copy question list to a un-asked variable
-        DONE -- Random Select a question
-            DONE -- will need to do a math calculation to ran select
-            DONE -- Move questions from un-asked to asked to prevent being repeated
-    awnserCheck
-        DONE -- if right
-            DONE -- grant points points
-            DONE -- Diplay a right messages
-            DONE -- Loop to next question 
-        DONE -- If wrong
-            DONE -- remove 10 seconds from clock
-            DONE -- Loop to next question        
+Requiremments:
+    Questions
+        These still need to be created and added to the array.
     GameOver
-        DONE -- Triggers when time runs out or out of questions
         Show user final score
             Needs to be styled
-        Done -- Diplay message "Great job" message
-        DONE -- Store score to local storage
-        DONE -- Redirects user to high score page
-    PlayAgain function
-        trigger page reload
-            bonus
-                could set local storage variable to auto trigger autoPlay
+    Record Keeping (high Score Page)
+        update top 5 list
+        Need clear high score button
+    Fix high scores link
+        Should hide/Show highscore div
 
 
-Extras if have extra time
-    award extra points if questions awsered fast
-        will require a second timer for the question
+
+Extras (if time):
+    Clean out console logs
     Add 3 or 5 second fade to feedback
     Look to see if sounds can be added
         Correct, Incorrect, Game done
     Find a background image
         use opacity on it to reduce attention?
-    Why is a qusetion being lost during playthough
     Clean up assets
         Remove highscore html and js files
     Change questions array to objects
+    Break up score from questions and time on submit score div
+    Put div over the placeholder buttons before quiz is started and outline:
+        How much time
+        How many questions
+        How Scoring works
+    Timer
+        Prevent multiple triggers
+    PlayAgain function
+        trigger page reload
+            bonus
+                could set local storage variable to auto trigger autoPlay
+    Hide Initals Text box and Submit button after submitting to prevent multiple submissions of same score.
 */
 
 
