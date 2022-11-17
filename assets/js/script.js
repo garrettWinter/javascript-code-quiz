@@ -16,6 +16,11 @@ var option4Var = document.querySelector('#option4');
 var feedbackVar = document.querySelector('#awnserfeedback');
 var initials = document.querySelector("#initals");
 var submitRecord = document.querySelector("#submitRecord");
+var highScore1 = document.querySelector("#highScore1");
+var highScore2 = document.querySelector("#highScore2");
+var highScore3 = document.querySelector("#highScore3");
+var highScore4 = document.querySelector("#highScore4");
+var highScore5 = document.querySelector("#highScore5");
 
 var feedBackDisplay;
 var quizAnswer;
@@ -26,24 +31,44 @@ var highScores = [];
 var newScore;
 const quizQuestions = [
     [
-        "what is 2 + 2",
-        [1, 2, 3, 4],
-        'option4'
+        "Which of these is a Boolean value?",
+        ["456", "A scary place to rest", "True", "A string"],
+        "option3"
     ],
     [
-        "what is 4 + 4",
-        [1, 2, 8, 4],
-        'option3'
+        "What does NaN mean?",
+        ["Batman", "The value is undefined", "Value is null", "The value is Not a Number"],
+        "option4"
     ],
     [
-        "what is 5 + 5",
-        [5, 10, 15, 20],
-        'option2'
+        "What is DOM stand for in JavaScript?",
+        ["Document Object Model ", "Distributed Order Management", "Dissolved Organic Matter", "Design Out Maintenance"],
+        "option1"
     ],
     [
-        "what is 10 + 10",
-        [20, 10, 80, 40],
-        'option1'
+        "What does the '===' operator mean?",
+        ["Equals", "Strick Equals", "Not Equal to", "Greater than"],
+        "option2"
+    ],
+    [
+        "Which of these is a String?",
+        ["123", "false", "A piece of fabric", "'JavaScript is fun'"],
+        "option4"
+    ],
+    [
+        "What does the '+=' operator do?",
+        ["Takes the existing value and adds to it", "Takes the existing value and subtracts from it", "Short hand for a loop", "Makes the values equal"],
+        "option1"
+    ],
+    [
+        "What does the '&&' operator mean?",
+        ["Means all values much match", "Mean only 1 values needs to match", "Means no values need to match", "Values will concatenate text together"],
+        "option1"
+    ],
+    [
+        "What does the '||' operator mean?",
+        ["Means all values much match", "Mean only 1 values needs to match", "Means no values need to match", "Will concatenate text together"],
+        "option2"
     ]
 ];
 
@@ -51,20 +76,40 @@ const quizQuestions = [
 quizOptionsList.addEventListener("click", answerCheck);
 startQuizBtn.addEventListener("click", playGame);
 
-/* Event Listener to submit score button Click NEED TO REVIEW THESE AND CLEAN THIS UP!!!!!*/
+/* Event Listener to submit score button Click */
 submitScoreBtn.addEventListener("click", recordKeeping);
 submitRecord.addEventListener("click", submitHighScore)
 
 function recordKeeping() {
     console.log("recordKeeping function has been triggered.");
     // unhide Highscore DIV
-    highScores = JSON.parse(localStorage.getItem("allTimeHighScores",));
+    highScores = JSON.parse(localStorage.getItem("allTimeHighScores"));
     console.log(highScores);
-   
+    if (highScores === null) {
+        return;
+    }
     /*
     Update Display elements for highscores 
     */
+    if (highScores.length > 0) {
+        highScore1.textContent = (highScores[0][0] + " - " + highScores[0][1]);
+    }
 
+    if (highScores.length > 1) {
+        highScore2.textContent = (highScores[1][0] + " - " + highScores[1][1]);
+    }
+
+    if (highScores.length > 2) {
+        highScore3.textContent = (highScores[2][0] + " - " + highScores[2][1]);
+    }
+
+    if (highScores.length > 3) {
+        highScore4.textContent = (highScores[3][0] + " - " + highScores[3][1]);
+    }
+    if (highScores.length > 4) {
+        highScore5.textContent = (highScores[4][0] + " - " + highScores[4][1]);;
+    }
+        
 }
 
 /* This is the function to submit the score which will perform feild validation along with adding this to highScores array and local storage. */
@@ -76,13 +121,14 @@ function submitHighScore(event) {
         window.alert("Please enter initals before Submitting.");
         return;
     };
-    newScore = {
-        initials: initials.value,
-        score: score
-    };
-    highScores.push(newScore);
+    newScore = [[initials.value, score]];
+    if (highScores === null) {
+        highScores = newScore;
+    } else {
+        highScores.push(newScore);
+    }
     console.log(highScores);
-    localStorage.setItem("allTimeHighScores",JSON.stringify(highScores));
+    localStorage.setItem("allTimeHighScores", JSON.stringify(highScores));
     recordKeeping();
 
 }
@@ -202,21 +248,19 @@ function answerCheck(event) {
 
 /* Pseudo Coding
 Requiremments:
-    Questions
-        These still need to be created and added to the array.
     GameOver
         Show user final score
             Needs to be styled
     Record Keeping (high Score Page)
-        update top 5 list
         Need clear high score button
+            localStorage.removeItem(keyname)
     Fix high scores link
         Should hide/Show highscore div
 
 
 
 Extras (if time):
-    Clean out console logs
+    Clean up console logs
     Add 3 or 5 second fade to feedback
     Look to see if sounds can be added
         Correct, Incorrect, Game done
@@ -230,6 +274,7 @@ Extras (if time):
         How much time
         How many questions
         How Scoring works
+            You get 25 points and 10 additional seconds for each correct awnser. Each second you finish with is worth 5 addtional points.
     Timer
         Prevent multiple triggers
     PlayAgain function
