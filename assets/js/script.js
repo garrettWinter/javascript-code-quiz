@@ -106,6 +106,7 @@ function toggleHS() {
 function recordKeeping() {
     console.log("recordKeeping function has been triggered.");
     // unhide Highscore DIV
+    mainScoreBox.style.visibility = 'visible';
     highScores = JSON.parse(localStorage.getItem("allTimeHighScores"));
     console.log(highScores);
     if (highScores === null) {
@@ -133,7 +134,7 @@ function recordKeeping() {
     if (highScores.length > 4) {
         highScore5.textContent = (highScores[4][0] + " - " + highScores[4][1]);;
     };
-
+    
 };
 
 /* This is the function to submit the score which will perform feild validation along with adding this to highScores array and local storage. */
