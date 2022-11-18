@@ -3,7 +3,6 @@
 /* FInd a good definiton for these buttons and text update variables*/
 var startQuizBtn = document.querySelector('#startQuiz');
 var globalTimer = document.querySelector('#timeRemainingPH');
-var quizOptionsList = document.querySelector('#optionsList');
 var scoreDisplay = document.querySelector('#scoreValue');
 var optionsDisplay = document.querySelector('#optionsList');
 var gameOverText = document.querySelector('#gameOverP');
@@ -23,6 +22,8 @@ var highScore4 = document.querySelector("#highScore4");
 var highScore5 = document.querySelector("#highScore5");
 var clearScoresBtn = document.querySelector("#clearRecord");
 var toggleScores = document.querySelector("#toggleHighScores");
+var scoreHeader = document.querySelector("#scoreHeader");
+var optionsBox = document.querySelector('#optionsBox');
 
 var feedBackDisplay;
 var quizAnswer;
@@ -32,6 +33,7 @@ var timeOut = false;
 var highScores = [];
 var newScore;
 var toggle = "hide"
+var autoPlay = false;
 const quizQuestions = [
     [
         "Which of these is a Boolean value?",
@@ -76,7 +78,6 @@ const quizQuestions = [
 ];
 
 /* Event Listeners */
-quizOptionsList.addEventListener("click", answerCheck);
 startQuizBtn.addEventListener("click", playGame);
 
 clearScoresBtn.addEventListener("click", clearScores);
@@ -91,6 +92,7 @@ submitRecord.addEventListener("click", submitHighScore);
 toggleScores.addEventListener("click", toggleHS);
 
 function toggleHS() {
+    recordKeeping();
     if (toggle === "hide"){
         console.log("toggleHS-hide has run");
         toggle = "show";
@@ -176,7 +178,7 @@ function startTimer() {
 function gameOver() {
     console.log("gameOver function has been triggered");
     clearInterval(timer);
-    optionsDisplay.style.visibility = 'hidden';
+    optionsDisplay.style.display = 'none';
     startQuizBtn.textContent = "Play Again";
     startQuizBtn.style.visibility = 'visible';
     submitScoreBtn.style.visibility = 'visible';
@@ -185,7 +187,9 @@ function gameOver() {
     feedbackVar.textContent = feedBackDisplay;
     questionVar.textContent = "Game Over";
     score += (timeRemaining * 5);
+    scoreHeader.textContent = "Final Score:";
     scoreDisplay.textContent = score;
+    
     console.log("Final Score is: " + score);
     if (timeRemaining <= 0) {
         console.log("Ending Time remaining: " + timeRemaining);
@@ -198,7 +202,9 @@ function gameOver() {
 };
 
 function playGame() {
+    optionsDisplay.addEventListener("click", answerCheck);
     console.log("playGame function has been triggered");
+    optionsDisplay.style.display = 'contents';
     startQuizBtn.style.visibility = 'hidden';
     submitScoreBtn.style.visibility = 'hidden';
     console.log("Number of questions in the quizQuestions pool is: " + quizQuestions.length);
@@ -273,12 +279,6 @@ function answerCheck(event) {
 
 /* Pseudo Coding
 Requiremments:
-    GameOver
-        Show user final score
-            Needs to be styled
-                Update score to be final score once gameOver has triggered
-    Fix high scores link
-        Should hide/Show highscore div
     PlayAgain function
         trigger page reload
             bonus

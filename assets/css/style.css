@@ -150,6 +150,11 @@ div.headerTimer{
     margin: 20px;
 }
 
+#scoreBox{
+    display: flex;
+    justify-content: center;
+    
+}
 #scoreHeader{
     text-align: center;
     padding-top: 10px;
@@ -157,6 +162,20 @@ div.headerTimer{
     font-size: 30px;
 }
 
+#scoreValue{
+    display: inline;
+    text-align: center;
+    padding-top: 10px;
+    font-weight: bolder;
+    font-size: 30px;
+}
+
+#highScoreHeader{
+    text-align: center;
+    padding-top: 10px;
+    font-weight: bolder;
+    font-size: 30px;
+}
 
 .scoreli{
     border: 2px solid black;
