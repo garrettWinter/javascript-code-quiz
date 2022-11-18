@@ -21,6 +21,8 @@ var highScore2 = document.querySelector("#highScore2");
 var highScore3 = document.querySelector("#highScore3");
 var highScore4 = document.querySelector("#highScore4");
 var highScore5 = document.querySelector("#highScore5");
+var clearScoresBtn = document.querySelector("#clearRecord");
+var toggleScores = document.querySelector("#toggleHighScores");
 
 var feedBackDisplay;
 var quizAnswer;
@@ -29,6 +31,7 @@ var score = 0;
 var timeOut = false;
 var highScores = [];
 var newScore;
+var toggle = "hide"
 const quizQuestions = [
     [
         "Which of these is a Boolean value?",
@@ -76,9 +79,29 @@ const quizQuestions = [
 quizOptionsList.addEventListener("click", answerCheck);
 startQuizBtn.addEventListener("click", playGame);
 
+clearScoresBtn.addEventListener("click", clearScores);
+
+function clearScores (event){
+    localStorage.removeItem("allTimeHighScores");
+}
+
 /* Event Listener to submit score button Click */
 submitScoreBtn.addEventListener("click", recordKeeping);
-submitRecord.addEventListener("click", submitHighScore)
+submitRecord.addEventListener("click", submitHighScore);
+toggleScores.addEventListener("click", toggleHS);
+
+function toggleHS() {
+    if (toggle === "hide"){
+        console.log("toggleHS-hide has run");
+        toggle = "show";
+        console.log(toggle);
+        mainScoreBox.style.visibility = 'visible';
+    } else if (toggle === "show"){
+        console.log("toggleHS-show has run");
+        toggle = "hide";
+        mainScoreBox.style.visibility = 'hidden';
+    }
+}
 
 function recordKeeping() {
     console.log("recordKeeping function has been triggered.");
@@ -87,30 +110,31 @@ function recordKeeping() {
     console.log(highScores);
     if (highScores === null) {
         return;
-    }
+    };
     /*
     Update Display elements for highscores 
     */
     if (highScores.length > 0) {
         highScore1.textContent = (highScores[0][0] + " - " + highScores[0][1]);
-    }
+    };
 
     if (highScores.length > 1) {
         highScore2.textContent = (highScores[1][0] + " - " + highScores[1][1]);
-    }
+    };
 
     if (highScores.length > 2) {
         highScore3.textContent = (highScores[2][0] + " - " + highScores[2][1]);
-    }
+    };
 
     if (highScores.length > 3) {
         highScore4.textContent = (highScores[3][0] + " - " + highScores[3][1]);
-    }
+    };
+
     if (highScores.length > 4) {
         highScore5.textContent = (highScores[4][0] + " - " + highScores[4][1]);;
-    }
-        
-}
+    };
+
+};
 
 /* This is the function to submit the score which will perform feild validation along with adding this to highScores array and local storage. */
 function submitHighScore(event) {
@@ -121,17 +145,17 @@ function submitHighScore(event) {
         window.alert("Please enter initals before Submitting.");
         return;
     };
-    newScore = [[initials.value, score]];
+    newScore = [initials.value, score];
     if (highScores === null) {
-        highScores = newScore;
+        highScores = [newScore];
     } else {
         highScores.push(newScore);
-    }
+    };
     console.log(highScores);
     localStorage.setItem("allTimeHighScores", JSON.stringify(highScores));
     recordKeeping();
 
-}
+};
 
 /* This funtction controls the timer */
 function startTimer() {
@@ -144,9 +168,9 @@ function startTimer() {
             clearInterval(timer);
             console.log("Time has hit 0, and timer has been cleared")
             gameOver();
-        }
+        };
     }, 1000);
-}
+};
 
 function gameOver() {
     console.log("gameOver function has been triggered");
@@ -167,10 +191,10 @@ function gameOver() {
         gameOverText.textContent = "Oh no, you have ran out of time!";
     } else {
         gameOverText.textContent = "Congratulations you have made it through all of the questions!";
-    }
+    };
 
 
-}
+};
 
 function playGame() {
     console.log("playGame function has been triggered");
@@ -182,7 +206,7 @@ function playGame() {
     globalTimer.textContent = timeRemaining;
     startTimer();
     questionHandling();
-}
+};
 
 function questionHandling() {
     console.log("Number of questions left in the quizQuestions pool is: " + quizQuestions.length);
@@ -190,11 +214,11 @@ function questionHandling() {
         console.log("Have run out of questions.");
         gameOver();
         return;
-    }
+    };
 
 
     /* Generating a Random number for question selection */
-    console.log("questionHandling function has been triggered")
+    console.log("questionHandling function has been triggered");
     var randomNum = Math.floor(Math.random() * quizQuestions.length);
 
     /* Updating the question that is being shown to the user based on the random number that has been generated */
@@ -215,7 +239,7 @@ function questionHandling() {
 
     /* Splicing the question pool array to prevent question repeats */
     quizQuestions.splice(randomNum, 1);
-}
+};
 
 function answerCheck(event) {
     event.preventDefault();
@@ -226,23 +250,23 @@ function answerCheck(event) {
     console.log("Correct anwser was: " + quizAnswer);
 
     if (clickedElement === quizAnswer) {
-        console.log("+++++correct Awnser was clicked+++++")
+        console.log("+++++correct Awnser was clicked+++++");
         timeRemaining += 10;
         globalTimer.textContent = timeRemaining;
         score += 25;
-        console.log("Score is now: " + score)
+        console.log("Score is now: " + score);
         scoreDisplay.textContent = score;
         feedBackDisplay = "Correct!!! You have gained more 10 seconds!!";
         feedbackVar.textContent = feedBackDisplay;
         questionHandling();
     } else {
-        console.log("-----incorrect Awnser was clicked-----")
+        console.log("-----incorrect Awnser was clicked-----");
         timeRemaining -= 10;
         globalTimer.textContent = timeRemaining;
         feedBackDisplay = "Thats incorrect, you have lost 10 seconds. Better luck next time!! ";
         feedbackVar.textContent = feedBackDisplay;
-        questionHandling()
-    }
+        questionHandling();
+    };
 
 };
 
@@ -251,36 +275,27 @@ Requiremments:
     GameOver
         Show user final score
             Needs to be styled
-    Record Keeping (high Score Page)
-        Need clear high score button
-            localStorage.removeItem(keyname)
+                Update score to be final score once gameOver has triggered
     Fix high scores link
         Should hide/Show highscore div
-
+    PlayAgain function
+        trigger page reload
+            bonus
+                could set local storage variable to auto trigger autoPlay
+    Hide Option Boxes until gameStarts
 
 
 Extras (if time):
     Clean up console logs
-    Add 3 or 5 second fade to feedback
-    Look to see if sounds can be added
-        Correct, Incorrect, Game done
     Find a background image
         use opacity on it to reduce attention?
-    Clean up assets
-        Remove highscore html and js files
-    Change questions array to objects
-    Break up score from questions and time on submit score div
     Put div over the placeholder buttons before quiz is started and outline:
         How much time
         How many questions
         How Scoring works
             You get 25 points and 10 additional seconds for each correct awnser. Each second you finish with is worth 5 addtional points.
-    Timer
-        Prevent multiple triggers
-    PlayAgain function
-        trigger page reload
-            bonus
-                could set local storage variable to auto trigger autoPlay
+
+
     Hide Initals Text box and Submit button after submitting to prevent multiple submissions of same score.
 */
 
