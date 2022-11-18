@@ -22,6 +22,13 @@ nav{
 nav a{
     color: white;
 }
+
+#toggleHighScores{
+    color: white;
+    border-color: transparent;
+    font-size: 25px;
+}
+
 h1{
     text-align: center;
 }
@@ -51,6 +58,7 @@ div.headerTimer{
     text-align: center;
     align-items: center;
     font-size: 25px;
+    padding-bottom: 10px;
 }
 
 #question{
@@ -67,7 +75,7 @@ div.headerTimer{
     line-height: 150%;
     }
 
-li{
+.optionli{
     border: 2px solid black;
     margin: 10px 10px 0px 10px;
     padding-left: 20px;
@@ -76,7 +84,7 @@ li{
     font-size: 20px;
     line-height: 150%;
 }
-li:hover{
+.optionli:hover{
     background-color: darkgreen;
 
 }
@@ -103,6 +111,61 @@ li:hover{
     background-color: darkred;
     color: white;
     display: none;
+}
+
+#highScoreActionBox{
+    text-align: center;
+}
+
+#initals{
+    line-height: 200%;
+    padding-left: 5px;
+    background-color: lightgray;
+}
+
+#submitRecord{
+    background-color: white;
+    padding: 7px;
+    background-color: darkred;
+    color: white;
+}
+
+#clearRecord{
+    background-color: white;
+    padding: 7px;
+    background-color: darkred;
+    color: white;
+}
+
+#mainScoreBox{
+    margin: 50px 20px;
+    background-color: grey;
+    border: 2px solid black;
+    visibility: hidden;
+}
+#highScoreBox{
+    border: 2px solid black;
+    padding: 5px;
+    background-color: #A9A9A9;
+    margin: 20px;
+}
+
+#scoreHeader{
+    text-align: center;
+    padding-top: 10px;
+    font-weight: bolder;
+    font-size: 30px;
+}
+
+
+.scoreli{
+    border: 2px solid black;
+    margin: 10px 10px 0px 10px;
+    padding-left: 20px;
+    background-color: darkred;
+    color: white;
+    font-size: 20px;
+    line-height: 150%;
 }
 
 footer{

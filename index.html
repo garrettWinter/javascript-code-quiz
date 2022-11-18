@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,9 +9,12 @@
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
+
 <body>
     <header>
-        <nav><a href="./highscore.html">High Scores</a></nav>
+        <nav>
+            <button id= "toggleHighScores">Toggle High Scores </button>
+        </nav>
         <h1>Javascript Code Quiz</h1>
         <div class="headerTimer">
             <div>Time: </div>
@@ -23,40 +27,43 @@
                 <p id="question">Welcome to the Javascipt Code Quiz! How well will you do?</p>
                 <div id="optionsBox">
                     <p id="gameOverP"></p>
-                    <ul id="optionsList"> 
-                        <li id="option1">Option 1 - Placeholder</li>
-                        <li id="option2">Option 2 - Placeholder</li>
-                        <li id="option3">Option 3 - Placeholder</li>
-                        <li id="option4">Option 4 - Placeholder</li>
+                    <ul id="optionsList">
+                        <li class="optionli" id="option1">Option 1 - Placeholder</li>
+                        <li class="optionli" id="option2">Option 2 - Placeholder</li>
+                        <li class="optionli" id="option3">Option 3 - Placeholder</li>
+                        <li class="optionli" id="option4">Option 4 - Placeholder</li>
                     </ul>
-                    <p id="awnserfeedback">MOVE THIS TO HIGH SCORE PAGE ------- You get 25 points and 10 additional seconds for each correct awnser.</p>
+                    <p id="awnserfeedback"></p>
                 </div>
                 <div id="startButtonDiv">
                     <button id="startQuiz">Start the Quiz!</button>
                     <button id="submitScore">Submit your score!</button>
                     <div id="scoreBox">
-                        <div>Score:</div>
+                        <div>Score: </div>
                         <div id="scoreValue">0</div>
                     </div>
                 </div>
 
             </div>
         </div>
-        <div>
-            <form id="initalsForm">
-                <input id=initals type="text" placeholder="initals/name">
-            <button id="submitRecord">Submit</button>
-            </form>
-        </div>
-        <div>
-            <ul>Top 5 Scores:
-                <li>1. <span id="highScore1"></span></li>
-                <li>2. <span id="highScore2"></span></li>
-                <li>3. <span id="highScore3"></span></li>
-                <li>4. <span id="highScore4"></span></li>
-                <li>5. <span id="highScore5"></span></li>
-            </ul>
-    
+        <div id="mainScoreBox">
+            <div id="highScoreBox">
+                <div id="highScoreActionBox">
+                    <form id="initalsForm">
+                        <input id=initals type="text" placeholder="initals / Name">
+                        <button id="submitRecord">Submit</button>
+                        <button id="clearRecord">Clear Records</button>
+                    </form>
+                </div>
+                <p id="scoreHeader">Top 5 Scores:</p>
+                <ul>
+                    <li class="scoreli">1. <span id="highScore1"></span></li>
+                    <li class="scoreli">2. <span id="highScore2"></span></li>
+                    <li class="scoreli">3. <span id="highScore3"></span></li>
+                    <li class="scoreli">4. <span id="highScore4"></span></li>
+                    <li class="scoreli">5. <span id="highScore5"></span></li>
+                </ul>
+            </div>
         </div>
     </main>
     <footer>
@@ -64,4 +71,5 @@
     </footer>
     <script src="./assets/js/script.js"></script>
 </body>
+
 </html>
