@@ -1,6 +1,6 @@
 /* Global Parameters*/
 
-/* FInd a good definiton for these buttons and text update variables*/
+/* Find a good definition for these buttons and text update variables*/
 var startQuizBtn = document.querySelector('#startQuiz');
 var globalTimer = document.querySelector('#timeRemainingPH');
 var scoreDisplay = document.querySelector('#scoreValue');
@@ -82,7 +82,7 @@ startQuizBtn.addEventListener("click", playGame);
 
 clearScoresBtn.addEventListener("click", clearScores);
 
-function clearScores (event){
+function clearScores(event) {
     localStorage.removeItem("allTimeHighScores");
 }
 
@@ -92,17 +92,16 @@ submitRecord.addEventListener("click", submitHighScore);
 toggleScores.addEventListener("click", toggleHS);
 playAgainBtn.addEventListener("click", playAgain);
 
-
 // highScores = JSON.parse(localStorage.getItem("allTimeHighScores"));
 
 function toggleHS() {
     recordKeeping();
-    if (toggle === "hide"){
+    if (toggle === "hide") {
         console.log("toggleHS-hide has run");
         toggle = "show";
         console.log(toggle);
         mainScoreBox.style.visibility = 'visible';
-    } else if (toggle === "show"){
+    } else if (toggle === "show") {
         console.log("toggleHS-show has run");
         toggle = "hide";
         mainScoreBox.style.visibility = 'hidden';
@@ -140,16 +139,16 @@ function recordKeeping() {
     if (highScores.length > 4) {
         highScore5.textContent = (highScores[4][0] + " - " + highScores[4][1]);;
     };
-    
+
 };
 
-/* This is the function to submit the score which will perform feild validation along with adding this to highScores array and local storage. */
+/* This is the function to submit the score which will perform field validation along with adding this to highScores array and local storage. */
 function submitHighScore(event) {
     event.preventDefault();
     event.stopPropagation();
     console.log("submitHighScore function has been triggered.");
     if (initials.value.length === 0) {
-        window.alert("Please enter initals before Submitting.");
+        window.alert("Please enter initials before Submitting.");
         return;
     };
     newScore = [initials.value, score];
@@ -192,7 +191,7 @@ function gameOver() {
     score += (timeRemaining * 5);
     scoreHeader.textContent = "Final Score:";
     scoreDisplay.textContent = score;
-    
+
     console.log("Final Score is: " + score);
     if (timeRemaining <= 0) {
         console.log("Ending Time remaining: " + timeRemaining);
@@ -201,11 +200,10 @@ function gameOver() {
         gameOverText.textContent = "Congratulations you have made it through all of the questions!";
     };
 
-
 };
 
-function playAgain(){
-        location.reload();
+function playAgain() {
+    location.reload();
 };
 
 function playGame() {
@@ -230,7 +228,6 @@ function questionHandling() {
         return;
     };
 
-
     /* Generating a Random number for question selection */
     console.log("questionHandling function has been triggered");
     var randomNum = Math.floor(Math.random() * quizQuestions.length);
@@ -249,7 +246,7 @@ function questionHandling() {
     option4Var.textContent = option4Display;
 
     quizAnswer = quizQuestions[randomNum][2];
-    console.log("The awnser is: " + quizAnswer);
+    console.log("The answer is: " + quizAnswer);
 
     /* Splicing the question pool array to prevent question repeats */
     quizQuestions.splice(randomNum, 1);
@@ -258,13 +255,13 @@ function questionHandling() {
 function answerCheck(event) {
     event.preventDefault();
     event.stopPropagation();
-    console.log("awnserCheck function has been tiggered");
+    console.log("awnserCheck function has been triggered");
     var clickedElement = event.target.id;
     console.log("Clicked Option was: " + clickedElement);
     console.log("Correct anwser was: " + quizAnswer);
 
     if (clickedElement === quizAnswer) {
-        console.log("+++++correct Awnser was clicked+++++");
+        console.log("+++++correct Answer was clicked+++++");
         timeRemaining += 10;
         globalTimer.textContent = timeRemaining;
         score += 25;
@@ -274,37 +271,12 @@ function answerCheck(event) {
         feedbackVar.textContent = feedBackDisplay;
         questionHandling();
     } else {
-        console.log("-----incorrect Awnser was clicked-----");
+        console.log("-----incorrect Answer was clicked-----");
         timeRemaining -= 10;
         globalTimer.textContent = timeRemaining;
-        feedBackDisplay = "Thats incorrect, you have lost 10 seconds. Better luck next time!! ";
+        feedBackDisplay = "That’s incorrect, you have lost 10 seconds. Better luck next time!! ";
         feedbackVar.textContent = feedBackDisplay;
         questionHandling();
     };
 
 };
-
-/* Pseudo Coding
-Requiremments:
-    PlayAgain function
-        trigger page reload
-            bonus
-                could set local storage variable to auto trigger autoPlay
-    Hide Option Boxes until gameStarts
-
-
-Extras (if time):
-    Clean up console logs
-    Find a background image
-        use opacity on it to reduce attention?
-    Put div over the placeholder buttons before quiz is started and outline:
-        How much time
-        How many questions
-        How Scoring works
-            You get 25 points and 10 additional seconds for each correct awnser. Each second you finish with is worth 5 addtional points.
-
-
-    Hide Initals Text box and Submit button after submitting to prevent multiple submissions of same score.
-*/
-
-

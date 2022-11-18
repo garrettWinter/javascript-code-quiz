@@ -6,14 +6,14 @@
 Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
 
 - What was your motivation?
-    - To build a webpage that will quiz the users knowledge of basic JavaScript, and that will hopefuly teach them something as well.
+    - To build a webpage that will quiz the users knowledge of basic JavaScript, and that will hopefully teach them something as well.
 - Why did you build this project?
     - To showcase my expanding knowledge and JavaScript, HTML and CSS.
 - What did you learn?
     - How to better define functions.
-    - How to store and retreave data from local storage.
+    - How to store and retrieve data from local storage.
     - A stronger understanding of event triggers work
-    - How to modify content elments using JavaScript.
+    - How to modify content elements using JavaScript.
 
 ## Table of Contents 
 
@@ -62,14 +62,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
 ## Features
 
 Some notable items for this project are:
-    - A toogle switch to show/hide the high scores
-    - Dynamic button control to prevent buttons from being used at inapropreiate times.
-    - High Score data is stored on local compture to allow that user to come back later to try to score even better.
-    - A buttom to clear high scores from local storage if desired.
-    - Some silly/dad jokes in a couple of the anweser options.
-
-
+    - A toggle switch to show/hide the high scores
+    - Dynamic button control to prevent buttons from being used at inappropriate times.
+    - High Score data is stored on local computer to allow that user to come back later to try to score even better.
+    - A button to clear high scores from local storage if desired.
+    - Some silly/dad jokes in a couple of the answer options.
