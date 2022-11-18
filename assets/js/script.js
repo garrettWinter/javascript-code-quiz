@@ -24,6 +24,7 @@ var clearScoresBtn = document.querySelector("#clearRecord");
 var toggleScores = document.querySelector("#toggleHighScores");
 var scoreHeader = document.querySelector("#scoreHeader");
 var optionsBox = document.querySelector('#optionsBox');
+var playAgainBtn = document.querySelector('#playAgain')
 
 var feedBackDisplay;
 var quizAnswer;
@@ -33,7 +34,6 @@ var timeOut = false;
 var highScores = [];
 var newScore;
 var toggle = "hide"
-var autoPlay = false;
 const quizQuestions = [
     [
         "Which of these is a Boolean value?",
@@ -90,6 +90,10 @@ function clearScores (event){
 submitScoreBtn.addEventListener("click", recordKeeping);
 submitRecord.addEventListener("click", submitHighScore);
 toggleScores.addEventListener("click", toggleHS);
+playAgainBtn.addEventListener("click", playAgain);
+
+
+// highScores = JSON.parse(localStorage.getItem("allTimeHighScores"));
 
 function toggleHS() {
     recordKeeping();
@@ -178,9 +182,8 @@ function startTimer() {
 function gameOver() {
     console.log("gameOver function has been triggered");
     clearInterval(timer);
+    playAgainBtn.style.visibility = 'visible';
     optionsDisplay.style.display = 'none';
-    startQuizBtn.textContent = "Play Again";
-    startQuizBtn.style.visibility = 'visible';
     submitScoreBtn.style.visibility = 'visible';
     submitScore.style.display = 'inline';
     feedBackDisplay = "";
@@ -201,11 +204,15 @@ function gameOver() {
 
 };
 
+function playAgain(){
+        location.reload();
+};
+
 function playGame() {
     optionsDisplay.addEventListener("click", answerCheck);
     console.log("playGame function has been triggered");
     optionsDisplay.style.display = 'contents';
-    startQuizBtn.style.visibility = 'hidden';
+    startQuizBtn.style.display = 'none';
     submitScoreBtn.style.visibility = 'hidden';
     console.log("Number of questions in the quizQuestions pool is: " + quizQuestions.length);
     var askedQuestions = '';

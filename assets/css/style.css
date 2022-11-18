@@ -113,6 +113,14 @@ div.headerTimer{
     display: none;
 }
 
+#playAgain{
+    background-color: white;
+    padding: 7px;
+    background-color: darkred;
+    color: white;
+    visibility: hidden;
+}
+
 #highScoreActionBox{
     text-align: center;
 }
