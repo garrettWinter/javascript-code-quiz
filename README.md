@@ -28,8 +28,8 @@ Provide a short description explaining the what, why, and how of your project. U
     - This webpage can be viewed by following the below link:
         - https://garrettwinter.github.io/javascript-password-generator-build/
         
-    - Below a screenshot of the webpage as of 11/10/2022
-        - ![Screenshot of Garrett Winter's JavaScript-Code-Quiz](./assets/images/Screencapture-JavaScript-Code-Quiz.png)
+    - Below a screenshot of the webpage:
+![Screenshot of Garrett Winter's JavaScript-Code-Quiz](./assets/images/Screencapture-JavaScript-Code-Quiz.png)
 
 ## Credits
 
